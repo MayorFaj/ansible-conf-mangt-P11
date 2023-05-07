@@ -20,7 +20,7 @@
         path: /home/mydir/file.txt
         state: touch
 
-    - name: change timezone
+    - name: set timezone
       timezone:
         name: America/New_York
 # ------------------------------------------------------------------
@@ -49,9 +49,8 @@
         path: /home/mydir/file.txt
         state: touch
 
-    - name: change timezone
+    - name: set timezone
       timezone:
         name: America/New_York
 ...
-
 

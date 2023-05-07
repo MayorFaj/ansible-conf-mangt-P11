@@ -73,7 +73,7 @@ ssh-add <path-to-private-key>
 <Load-Balancer-Private-IP-Address> ansible_ssh_user='ubuntu'
 ```
 
-Step 5 – Create a Common Playbook
+## Step 5 – Create a Common Playbook
 
 - It is time to start giving Ansible the instructions on what you needs to be performed on all servers listed in inventory/dev
 
@@ -94,6 +94,8 @@ Step 5 – Create a Common Playbook
         name: wireshark
         state: latest
 
+# ---------------------------------------------------------------------
+
 - name: update LB server
   hosts: lb
   remote_user: ubuntu
@@ -108,15 +110,87 @@ Step 5 – Create a Common Playbook
       apt:
         name: wireshark
         state: latest
+...
 ```
 
 - This playbook is divided into two parts, each of them is intended to perform the same task: install wireshark utility (or make sure it is updated to the latest version) on your RHEL 8 and Ubuntu servers. It uses root user to perform this task and respective package manager: yum for RHEL 8 and apt for Ubuntu.
 
-- update this playbook with following tasks:
 
-1. Create a directory and a file inside it
-2. Change timezone on all servers
-3. Run some shell script
+
+## Step 6 – Update GIT with the latest code
+
+- Now all of your directories and files live on your machine and you need to push changes made locally to GitHub.
+
+- Now we have a separate branch, there is need to  raise a `Pull Request` (PR), get your branch peer reviewed and merged to the main branch.
+
+- Commit your code into GitHub:
+
+1. Use git commands to add, commit and push your branch to GitHub.
+
+```
+git status
+
+git add <selected files>
+
+git commit -m "commit message"
+
+```
+
+2. Create a Pull request 
+
+3. Review the code, and merge to the main branch.
+
+4. Head back on your terminal, checkout from the feature branch into the main, and pull down the latest changes.
+
+`git checkout main`
+
+`git pull origin prj-11a`
+
+- Once your code changes appear in main branch – Jenkins will do its job and save all the files (build artifacts) to `/var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/` directory on Jenkins-Ansible server.
+
+
+
+## Step 7 – Run Ansible test
+
+- on your jenkins-ansible server termianl, run
+
+`ansible-playbook -i /var/lib/jenkins/jobs/ansible/builds/<buildnumber>/archive/inventory/dev.yml /var/lib/jenkins/jobs/ansible/builds/<buildnumber>/archive/playbooks/common.yml`
+
+![Ansible-playbook comm result](./images/AnsiblePlaybook%20Comm.png)
+
+- You can go to each of the servers and check if wireshark has been installed by running `which wireshark` or `wireshark --version`
+
+![WebS1](/images/WS1%20wireshark.png)
+
+![WebS2](./images/WS2%20wireshark.png)
+
+![DB](./images/DB%20wireshark.png)
+
+![NFS](./images/NFS%20wireshark.png)
+
+![LB](./images/LB%20wireshark.png)
+
+
+- The updated with Ansible architecture now looks like this:
+
+![Updated Architechture](./images/Updated%20architecture.png)
+
+
+### Optional Step
+
+- Update your ansible playbook with some new Ansible tasks and go through the full
+
+`checkout -> change codes -> commit -> PR -> merge -> build -> ansible-playbook`
+
+cycle again to see how easily you can manage a servers fleet of any size with just one command!
+
+- Update this playbook with following tasks:
+
+Create a directory and a file inside it
+Change timezone on all servers
+Run some shell script
+...
+
 
 ```
 ---
@@ -182,7 +256,7 @@ Step 5 – Create a Common Playbook
 
 ```
 
+ 
 
-## Step 6 – Update GIT with the latest code
 
-- 
+# **THANKS!!!**

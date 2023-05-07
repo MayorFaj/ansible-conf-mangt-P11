@@ -278,22 +278,19 @@ cycle again to see how easily you can manage a servers fleet of any size with ju
         name: wireshark
         state: latest
 
-    - name: create directory and file
+    - name: create directory
       file:
-        path: /var/www/html/mydir/myfile.txt
+        path: /home/mydir
+        state: directory
+    
+    - name: create a file
+      file:
+        path: /home/mydir/file.txt
         state: touch
-        mode: '0644'
-        owner: apache
-        group: apache
 
-    - name: change timezone
+    - name: set timezone
       timezone:
         name: America/New_York
-
-    - name: run shell script
-      shell: /path/to/my/script.sh
-      args:
-        chdir: /path/to/my/script/dir/
 # ------------------------------------------------------------------
 - name: update LB server
   hosts: lb
@@ -310,28 +307,25 @@ cycle again to see how easily you can manage a servers fleet of any size with ju
         name: wireshark
         state: latest
 
-    - name: create directory and file
+    - name: create directory
       file:
-        path: /var/www/html/mydir/myfile.txt
+        path: /home/mydir
+        state: directory
+    
+    - name: create a file
+      file:
+        path: /home/mydir/file.txt
         state: touch
-        mode: '0644'
-        owner: apache
-        group: apache
 
-    - name: change timezone
+    - name: set timezone
       timezone:
         name: America/New_York
-
-    - name: run shell script
-      shell: /path/to/my/script.sh
-      args:
-        chdir: /path/to/my/script/dir/
 ...
 
 
 ```
 
- 
+ ![Ansible Task2](./images/ansibleTask2.png)
 
 
 # **THANKS!!!**

@@ -10,8 +10,23 @@
         name: wireshark
         state: latest
 
-# ---------------------------------------------------------------------
+    - name: create directory and file
+      file:
+        path: /var/www/html/mydir/myfile.txt
+        state: touch
+        mode: '0644'
+        owner: apache
+        group: apache
 
+    - name: change timezone
+      timezone:
+        name: America/New_York
+
+    - name: run shell script
+      shell: /path/to/my/script.sh
+      args:
+        chdir: /path/to/my/script/dir/
+# ------------------------------------------------------------------
 - name: update LB server
   hosts: lb
   remote_user: ubuntu
@@ -26,4 +41,21 @@
       apt:
         name: wireshark
         state: latest
+
+    - name: create directory and file
+      file:
+        path: /var/www/html/mydir/myfile.txt
+        state: touch
+        mode: '0644'
+        owner: apache
+        group: apache
+
+    - name: change timezone
+      timezone:
+        name: America/New_York
+
+    - name: run shell script
+      shell: /path/to/my/script.sh
+      args:
+        chdir: /path/to/my/script/dir/
 ...

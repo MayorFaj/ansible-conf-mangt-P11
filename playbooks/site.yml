@@ -1,3 +1,6 @@
 ---
 - hosts: all
-- import_playbook: /home/ubuntu/ansible-conf-mangt-P11/static-assignments/common-del.yml
+- import_playbook: ../ansible-conf-mangt-P11/static-assignments/common-del.yml
+
+- hosts: uat-webservers
+- import_playbook: ../static-assignments/uat-webservers.yml

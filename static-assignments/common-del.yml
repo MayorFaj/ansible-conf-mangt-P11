@@ -1,0 +1,21 @@
+---
+- name: delete wireshark on Ubuntu and RHEL
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: delete wireshark on ubuntu
+      apt:
+        name: wireshark-qt
+        state: absent
+        autoremove: yes
+        purge: yes
+        autoclean: yes
+    when: ansible_os_family == 'Debian'
+
+    - name: delete wireshark on Red Hat
+      yum:
+        name: wireshark
+        state: absent
+      when: ansible_os_family == 'RedHat'
+...

@@ -5,17 +5,18 @@
   become_user: root
   tasks:
     - name: delete wireshark on ubuntu
+      when: ansible_os_family == 'Debian'
       apt:
-        name: wireshark-qt
+        name: wireshark
         state: absent
         autoremove: yes
         purge: yes
         autoclean: yes
-    when: ansible_os_family == 'Debian'
 
     - name: delete wireshark on Red Hat
+      when: ansible_os_family == 'RedHat'
       yum:
         name: wireshark
         state: absent
-      when: ansible_os_family == 'RedHat'
 ...
+

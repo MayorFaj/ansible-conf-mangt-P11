@@ -17,11 +17,11 @@
 
 
 
-### STEP1: INSTALL AND CONFIGURE ANSIBLE ON EC2 INSTANCE
+### STEP 1: INSTALL AND CONFIGURE ANSIBLE ON EC2 INSTANCE
 
 1. Update Name tag on your Jenkins EC2 Instance to `Jenkins-Ansible`. We will use this server to run playbooks.
 
-2. In your GitHub account create a new repository and name it ansible-config-mgt.
+2. In your GitHub account create a new repository and name it `<ansible-conf-mangt-P11>`.
 
 3. Install Ansible
 
@@ -35,7 +35,7 @@ sudo apt install ansible
 
 4. Configure Jenkins build job to save your repository content every time you change it.
 
-- Create a new Freestyle project `ansible` in Jenkins and point it to your ‘ansible-config-mgt’ repository.
+- Create a new Freestyle project `ansible` in Jenkins and point it to your ‘ansible-conf-mangt-P11’ repository.
 - Configure `Webhook` in GitHub and set webhook to trigger ansible build.
 - Configure a Post-build job to save all (**) files.
 
@@ -46,14 +46,13 @@ sudo apt install ansible
 
 ![Architecture1](./images/Architecture.png)
 
-Note; Every time you stop/start your Jenkins-Ansible server – you have to reconfigure GitHub webhook to a new IP address, in order to avoid it, it makes sense to allocate an Elastic IP to your Jenkins-Ansible server.(Refer to LB server in Project 10).
+Note; Every time you stop/start your Jenkins-Ansible server – you have to reconfigure GitHub webhook to a new IP address, in order to avoid it, it makes sense to allocate an `Elastic` IP to your Jenkins-Ansible server.(Refer to LB server in Project 10).
 
 ## STEP 2 – Prepare your development environment using Visual Studio Code
 
 1. Intall Visual Studio Code, configure it to connect to your newly created GitHub repository.
 
-2. Clone down your ansible-config-mgt repo to your Jenkins-Ansible instance
-git clone <ansible-config-mgt repo link>
+2. Clone down your ansible-config-mgt repo to your Jenkins-Ansible instance `git clone <ansible-conf-mangt-P11>` repo link.
 
 
 3. In your ansible-config-mgt GitHub repository, create a new branch that will be used for development of a new feature.
@@ -64,7 +63,7 @@ git clone <ansible-config-mgt repo link>
 
 5. Create a directory and name it playbooks – it will be used to store all your playbook files.
 
-`mkdir palybooks`
+`mkdir playbooks`
 
 6. Create a directory and name it inventory – it will be used to keep your hosts organised.
 
@@ -95,7 +94,7 @@ You can enable this  SSH configuration file snippet for connecting to a remote s
 Host jenkins-ansible
     Hostname 3.132.218.7
     User ubuntu
-    IdentityFile <path to key.pem file>(/Users/mozart/downloads/)MayorFaj-EC2.pem
+    IdentityFile (<path to key.pem file>) /Users/mozart/downloads/MayorFaj-EC2.pem
     ForwardAgent yes
     ControlPath /tmp/ansible-ssh-%h-%p-%r
     ControlMaster auto
@@ -207,6 +206,8 @@ git add <selected files>
 
 git commit -m "commit message"
 
+git pull origin prj-11a
+
 ```
 
 2. Head to your github account, create a Pull request 
@@ -249,7 +250,7 @@ git commit -m "commit message"
 ![Updated Architechture](./images/Updated%20architecture.png)
 
 
-### Optional Step
+### Task 2
 
 - Update your ansible playbook with some new Ansible tasks and go through the full
 
@@ -330,10 +331,14 @@ cycle again to see how easily you can manage a servers fleet of any size with ju
 
 # **THANKS!!!**
 
+-
+-
+-
+-
+-
 
+# PROJECT-12 (a continuation of P11)
 
-
-# PROJECT-12
 
 # ANSIBLE REFACTORING AND STATIC ASSIGNMENTS (IMPORTS AND ROLES)
 
@@ -625,12 +630,12 @@ Within the `static-assignments` folder, create a new assignment for uat-webserve
 
 Remember that the entry point to our ansible configuration is the `site.yml` file. Therefore, you need to refer your `uat-webservers.yml` role inside `site.yml`.
 
-So, we should have this in `site.yml`
+So, we should have this in `site.yml` **NB**: comment out the common.yml playbook
 
 ```
 ---
-- hosts: all
-- import_playbook: ../static-assignments/common.yml
+#- hosts: all
+#- import_playbook: ../static-assignments/common.yml
 
 - hosts: uat-webservers
 - import_playbook: ../static-assignments/uat-webservers.yml
@@ -642,7 +647,9 @@ Commit your changes, create a Pull Request and merge them to master branch, make
 
 Now run the playbook against your uat inventory and see what happens:
 
-`sudo ansible-playbook -i /home/ubuntu/ansible-conf-mangt-P11/inventory/uat.yml /home/ubuntu/ansible-conf-mangt-P11/playbooks/site.yml`
+`ansible-playbook -i /home/ubuntu/ansible-conf-mangt-P11/inventory/uat.yml /home/ubuntu/ansible-conf-mangt-P11/playbooks/site.yml`
+
+![installed](./images/installation_successP12.png)
 
 You should be able to see both of your UAT Web servers configured and you can try to reach them from your browser:
 
@@ -651,6 +658,8 @@ You should be able to see both of your UAT Web servers configured and you can tr
 or
 
 `http://<Web1-UAT-Server-Public-IP-or-Public-DNS-Name>/index.php`
+
+![webpage](./images/WebPage12.png)
 
 Your Ansible architecture now looks like this:
 

@@ -1,4 +1,4 @@
----
+#---
 #- hosts: all
 #- import_playbook: /ansible-conf-mangt-P11/static-assignments/common-del.yml
 

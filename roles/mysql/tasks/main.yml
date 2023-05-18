@@ -1,6 +1,7 @@
 ---
 # Variable configuration.
-- ansible.builtin.include_tasks: variables.yml
+- include_tasks: variables.yml
+
 
 # Setup/install tasks.
 - ansible.builtin.include_tasks: setup-RedHat.yml

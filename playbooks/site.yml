@@ -1,19 +1,41 @@
-#---
+# ---
 #- hosts: all
 #- import_playbook: /ansible-conf-mangt-P11/static-assignments/common-del.yml
 
 #- hosts: uat-webservers
 #- import_playbook: ../static-assignments/uat-webservers.yml
 
+#- hosts: webservers
+#- name: Webserver assignment
+#  import_playbook: ../static-assignments/webservers.yml
+
+
+#- hosts: all
+#- name: Include dynamic variables 
+#  tasks:
+#  import_playbook: ../static-assignments/common.yml 
+#  include: ../dynamic-assignments/env-vars.yml
+#  tags:
+#    - always
+
 ---
-- hosts: all
-- name: Include dynamic variables 
-  tasks:
-  import_playbook: ../static-assignments/common.yml 
+- name: import common file
+  import_playbook: ../static-assignments/common.yml
+  tags:
+    - always
+
+- name: Include env-vars file
   include: ../dynamic-assignments/env-vars.yml
   tags:
     - always
 
-- hosts: webservers
-- name: Webserver assignment
+- name: import database file
+  import_playbook: ../static-assignments/database.yml
+
+- name: import webservers file
   import_playbook: ../static-assignments/webservers.yml
+
+- name: Loadbalancers assignment
+  import_playbook: ../static-assignments/loadbalancers.yml
+  when: load_balancer_is_required
+

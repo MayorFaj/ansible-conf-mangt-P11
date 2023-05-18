@@ -21,6 +21,7 @@ apache_vhosts:
   # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
   - servername: "local.dev"
     documentroot: "/var/www/html"
+    loadbalancer_name: "myapp1"
 
 apache_allow_override: "All"
 apache_options: "-Indexes +FollowSymLinks"
@@ -59,3 +60,18 @@ apache_restart_state: restarted
 # Apache package state; use `present` to make sure it's installed, or `latest`
 # if you want to upgrade or switch versions using a new repo.
 apache_packages_state: present
+
+# Webservers
+loadbalancer_name: "myapp1"
+web1: "172.31.15.219 weight=3"
+web2: "172.31.14.201 weight=3"
+
+# vars
+enable_apache_lb: false 
+load_balancer_is_required: false
+
+
+
+
+
+

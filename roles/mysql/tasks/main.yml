@@ -10,7 +10,7 @@
 - include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
-- ansible.builtin.include_tasks: setup-Archlinux.yml
+- include_tasks: setup-Archlinux.yml
   when: ansible_os_family == 'Archlinux'
 
 - name: Check if MySQL packages were installed.

@@ -91,17 +91,18 @@ nginx_vhosts: []
 #    - "web2 weight=3"
 #    - proxy_pass http://myapp1"
 
+
 upstream myapp1 {
-      server  web1 172.31.15.219 weight=5; 
-      server  web2 172.31.14.201 weight=5;
+  server  web1 172.31.15.219 weight=5; 
+  server  web2 172.31.14.201 weight=5;
       
-   }
+}
 
 
-   server {
-      listen 80; 
+server {
+  listen 80; 
 
-      location / {
-          proxy_pass http://myapp1;
-      }
-   }
+  location / {
+      proxy_pass http://myapp1;
+  }
+}

@@ -1,7 +1,6 @@
 ---
 
-enable_nginx_lb: false 
-load_balancer_is_required: false
+
 
 # Used only for Debian/Ubuntu installation, as the -t option for apt.
 nginx_default_release: ""
@@ -92,3 +91,5 @@ nginx_upstreams:
     - proxy_pass http://myapp1"
 
 
+enable_nginx_lb: false 
+load_balancer_is_required: false

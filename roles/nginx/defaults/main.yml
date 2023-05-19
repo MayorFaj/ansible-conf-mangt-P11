@@ -82,30 +82,13 @@ nginx_vhosts: []
 #   template: "" # Can be used to override the `nginx_vhost_template` per host.
 #   state: "absent" # To remove the vhost configuration.
 
-#nginx_upstreams:
-# - name: myapp1
-#   strategy: "ip_hash" # "least_conn", etc.
-#   keepalive: 16 # optional
-#   servers:
-#    - "web1 weight=3"
-#    - "web2 weight=3"
-#    - proxy_pass http://myapp1"
+nginx_upstreams:
+ - name: myapp1
+   strategy: "ip_hash" # "least_conn", etc.
+   keepalive: 16 # optional
+   servers:
+    - "web1 weight=3"
+    - "web2 weight=3"
+    - proxy_pass http://myapp1"
 
 
-nginx_upstream myapp1 {
-  - server: 
-      address: 172.31.15.219
-      weight: 3
-  - server: 
-      address: 172.31.14.201 
-      weight: 3
-}
-
-
-server {
-  listen 80;
-
-  location / {
-    proxy_pass http://myapp1;
-  }
-}

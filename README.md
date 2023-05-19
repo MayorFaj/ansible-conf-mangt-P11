@@ -886,7 +886,20 @@ load_balancer_is_required: true
 To test this, you can update inventory for each environment and run Ansible against each environment.
 
 
-# *THANKS!!!*
+`ansible-playbook -i inventory/uat.yml playbooks/site.yml`
 
-We have used Ansible configuration management tool to prepare UAT environment for Tooling web solution.
+![play output 1](./images/play1.png)
+
+![play output 2](./images/play2.png)
+
+![play output 3](./images/play3.png)
+
+![play output 4](./images/play5.png)
+
+![play output 5](./images/play6.png)
+
+![play output 6](./images/play7.png)
+
+
+# *THANKS!!!*
 

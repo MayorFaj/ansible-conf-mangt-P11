@@ -1,9 +1,9 @@
 ---
 # Set this to the user ansible is logging in as - should have root
 # or sudo access
-mysql_user_home: /root
-mysql_user_name: root
-mysql_user_password: root
+mysql_user_home: /home/ec2-user
+mysql_user_name: ec2-user
+mysql_user_password:
 
 # The default root user installed by mysql - almost always root
 mysql_root_home: /root
@@ -115,9 +115,9 @@ mysql_databases:
 # Users.
 mysql_users:
    - name: webaccess
-     host: 0.0.0.0
+     host: 127.0.0.1
      password: secret
-     priv: '*.*:ALL,GRANT'
+     priv: tooling.*
 
 mysql_disable_log_bin: false
 

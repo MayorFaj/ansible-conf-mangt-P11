@@ -93,8 +93,10 @@ nginx_vhosts: []
 
 
 nginx_upstream myapp1 {
-  server 172.31.15.219 weight=3;
-  server 172.31.14.201 weight=3;
+  - server 172.31.15.219 
+    weight: 3
+  - server 172.31.14.201 
+    weight: 3
 }
 
 

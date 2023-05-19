@@ -1,60 +1,34 @@
 ---
-# Variable setup.
-- name: Include OS-specific variables.
-  include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Define nginx_user.
-  set_fact:
-    nginx_user: "{{ __nginx_user }}"
-  when: nginx_user is not defined
-
-# Setup/install tasks.
-- include_tasks: setup-RedHat.yml
-  when: ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky' or ansible_os_family == 'AlmaLinux'
-
-- include_tasks: setup-Ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
-
-- include_tasks: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
-
-- include_tasks: setup-FreeBSD.yml
-  when: ansible_os_family == 'FreeBSD'
-
-- include_tasks: setup-OpenBSD.yml
-  when: ansible_os_family == 'OpenBSD'
-
-- include_tasks: setup-Archlinux.yml
-  when: ansible_os_family == 'Archlinux'
-
-# Vhost configuration.
-- import_tasks: vhosts.yml
-
-- name: set webservers host name in /etc/hosts
+- name: Install nginx
   become: yes
-  blockinfile:
-    path: /etc/hosts
-    block: |
-      {{ item.ip }} {{ item.name }}
-  loop:
-    - { name: web1, ip: 172.31.15.219 }
-    - { name: web2, ip: 172.31.14.201 }
+  apt:
+    name: nginx
+    state: present
 
-# Nginx setup.
-- name: Copy nginx configuration in place.
-  become: true
-  template:
-    src: "{{ nginx_conf_template }}"
-    dest: "{{ nginx_conf_file_path }}"
-    owner: root
-    group: "{{ root_group }}"
-    mode: 0644
-  notify:
-    - reload nginx
 
-- name: Ensure nginx service is running as configured.
-  become: true
+
+- name: start nginx
+  become: yes
   service:
     name: nginx
-    state: "{{ nginx_service_state }}"
-    enabled: "{{ nginx_service_enabled }}"
+    state: started
+
+- name: Insert configuration file in server block
+  become: yes
+  blockinfile:
+     path: /etc/nginx/nginx.conf
+     block: "{{ lookup('file', '../templates/nginx.conf' ) }}"
+     insertafter: "http {"
+
+
+- name: Comment out site-enabled
+  become: yes
+  replace:
+     path: /etc/nginx/nginx.conf
+     regexp: '(.*enabled.*)'
+     replace: '#\1'
+         
+  notify: Restart nginx service
+
+

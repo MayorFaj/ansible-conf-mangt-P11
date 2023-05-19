@@ -93,8 +93,6 @@ upstream myapp1 {
       
    }
 
-   # This server accepts all traffic to port 80 and passes it to the upstream. 
-   # Notice that the upstream name and the proxy_pass need to match.
 
    server {
       listen 80; 

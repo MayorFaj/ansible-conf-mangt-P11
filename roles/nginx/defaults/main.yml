@@ -105,5 +105,3 @@ upstream myapp1 {
           proxy_pass http://myapp1;
       }
    }
-
-

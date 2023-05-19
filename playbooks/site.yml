@@ -33,12 +33,14 @@
   tags:
     - always
 
+- name: import database file
+  import_playbook: ../static-assignments/database.yml
+
 - name: Loadbalancers assignment
   import_playbook: ../static-assignments/loadbalancers.yml
   when: load_balancer_is_required
 
-- name: import database file
-  import_playbook: ../static-assignments/database.yml
+
 
 #- name: import webservers file
 # import_playbook: ../static-assignments/webservers.yml

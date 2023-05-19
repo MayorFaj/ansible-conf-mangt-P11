@@ -1,2 +1,2 @@
-enable_apache_lb: true
-load_balancer_is_required: true
+enable_apache_lb: false
+load_balancer_is_required: false
